@@ -1,0 +1,67 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:background="#00FFFFFF"
+    android:backgroundTint="#00FFFFFF"
+    app:cardBackgroundColor="@null"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consLayoutInListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/own_white"
+        android:backgroundTint="@color/own_back_white">
+
+        <TextView
+            android:id="@+id/textData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/archivo_semibold"
+            android:text="Monday 28/10/2022"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/consLayoutInListItem"
+            app:layout_constraintTop_toTopOf="@id/consLayoutInListItem" />
+
+        <TextView
+            android:id="@+id/textCondition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/archivo_semibold"
+            android:text="Sunny"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/textData"
+            app:layout_constraintTop_toBottomOf="@id/textData" />
+
+        <ImageView
+            android:id="@+id/imageForHours"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/consLayoutInListItem"
+            app:layout_constraintEnd_toEndOf="@id/consLayoutInListItem"
+            app:layout_constraintTop_toTopOf="@+id/textData"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <TextView
+            android:id="@+id/textTempInItemList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/archivo_semibold"
+            android:text="25°C"
+            android:textColor="@color/own_golden"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageForHours"
+            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintStart_toEndOf="@+id/textData"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
