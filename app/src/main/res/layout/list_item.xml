@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:background="#00FFFFFF"
-    android:backgroundTint="#00FFFFFF"
+    android:backgroundTint="@color/own_back_white"
     app:cardBackgroundColor="@null"
     app:cardCornerRadius="10dp">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/own_white"
-        android:backgroundTint="@color/own_back_white">
+        android:backgroundTint="#75000000">
 
         <TextView
             android:id="@+id/textData"

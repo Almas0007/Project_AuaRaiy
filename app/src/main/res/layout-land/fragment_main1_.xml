@@ -29,15 +29,15 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="#80000000"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -109,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:src="@drawable/icon_search"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textCurrentTime"
                 app:layout_constraintTop_toBottomOf="@+id/textTempMaxMin" />
 
@@ -118,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:src="@drawable/icon_sync"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageWeather"
                 app:layout_constraintTop_toBottomOf="@+id/textTempMaxMin" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -125,16 +127,16 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/black"
         android:backgroundTint="#6D17181E"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -150,13 +152,14 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerHoursDays"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tabLayout"
-        app:layout_constraintStart_toStartOf="@+id/tabLayout"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

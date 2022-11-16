@@ -2,7 +2,13 @@ package blim.enbek.talpynys.example_auaraiy.fragments
 
 import android.Manifest
 import android.R
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.media.audiofx.Equalizer
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +16,33 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import blim.enbek.talpynys.example_auaraiy.MainViewModel
+import blim.enbek.talpynys.example_auaraiy.adapters.DialogForGeo
 import blim.enbek.talpynys.example_auaraiy.adapters.ViewPagerAdapter
 import blim.enbek.talpynys.example_auaraiy.adapters.WeatherModel
 import blim.enbek.talpynys.example_auaraiy.databinding.FragmentMain1Binding
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.location.*
+import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
+import kotlin.coroutines.cancellation.CancellationException
 
 
 class Main1_Fragment : Fragment() {
-    final val API_KEY = "fa11ed2c08bc4b25b99165055222510"
+    final val API_KEY = "0bc9480aa3774e9f87f185237221611"
     private val model:MainViewModel by activityViewModels()
+     private lateinit var currentLocationClient:FusedLocationProviderClient
 
     val fragList = listOf(
         HoursFragment.newInstance(),
@@ -54,22 +68,74 @@ class Main1_Fragment : Fragment() {
         initFrag()
         checkPermission()
         updateDataViewModel()
-        giveDataAtAPI("Almaty")
+        checkLocation()
 
     }
     /**---------------------------------------------------------------------- */
+
+    fun checkLocationUsers(){
+        if(checkLocation()){
+            getLocationFunction()
+        }
+        else
+            DialogForGeo.onLocationFunction(requireContext(),object:DialogForGeo.Listener{
+                override fun onClick(name:String?) {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+            })
+    }
+    /**   Проверяем на подключенность гео*/
+    override fun onResume() {
+        super.onResume()
+        checkLocationUsers()
+    }
+
+
+    fun checkLocation(): Boolean {
+        val lction= activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return lction.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+    /**-------------------------------------------------------------------------------------------*/
     private fun initFrag() = with(binding) {
         val adapter = ViewPagerAdapter(activity as FragmentActivity, fragList)
         viewPagerHoursDays.adapter = adapter
-
+        currentLocationClient =LocationServices.getFusedLocationProviderClient(requireContext())
         TabLayoutMediator(tabLayout, viewPagerHoursDays)
         { tab, pos ->
             tab.text = fragTavList[pos]
         }.attach()
+        btnSync.setOnClickListener {
+        checkLocationUsers()
+        }
+        btnSearch.setOnClickListener {
+            DialogForGeo.enterCity(requireContext(),object : DialogForGeo.Listener{
+                override fun onClick(city: String?) {
+                    city?.let { it1 -> giveDataAtAPI(it1) }
+                }
+            })
+        }
+    }
+    fun searchCity(){
 
     }
 
+    fun getLocationFunction(){
+        val tokenCans = CancellationTokenSource()
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
 
+            return
+        }
+        currentLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY,tokenCans.token).addOnCompleteListener{
+            giveDataAtAPI("${it.result.latitude},${it.result.longitude}")
+        }
+    }
 
     private fun updateDataViewModel()= with(binding){
         model.liveDataCurrent.observe(viewLifecycleOwner){
