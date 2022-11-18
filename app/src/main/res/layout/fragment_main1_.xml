@@ -11,21 +11,22 @@
     tools:context="blim.enbek.talpynys.example_auaraiy.fragments.Main1_Fragment">
 
     <ImageView
-        android:id="@+id/imageBackgroundForFragment1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageBackgroundForFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:alpha="1"
+
         android:cropToPadding="false"
-        android:scaleType="fitXY"
 
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scaleType="centerCrop"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false"
-
         android:src="@drawable/uralsk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hh" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

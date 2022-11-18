@@ -7,12 +7,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.media.audiofx.Equalizer
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -72,6 +75,8 @@ class Main1_Fragment : Fragment() {
 
     }
     /**---------------------------------------------------------------------- */
+
+
 
     fun checkLocationUsers(){
         if(checkLocation()){
@@ -212,7 +217,13 @@ class Main1_Fragment : Fragment() {
         )
 
         model.liveDataCurrent.value= dataAtJSON
+//        val t = dataAtJSON.time.substringAfter(" ").substringBefore(":").toInt()
+//
+//        if(t in (0..6) || t in (19..23)) {
+//
+//        }
 
+        Log.d("TestLog", dataAtJSON.time.substringAfter(" ").substringBefore(":"))
         Log.d("TestLog", dataAtJSON.city)
         Log.d("TestLog",dataAtJSON.condition)
         Log.d("TestLog",dataAtJSON.time)
